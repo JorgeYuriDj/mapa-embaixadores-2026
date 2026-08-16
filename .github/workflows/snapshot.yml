@@ -1,0 +1,37 @@
+# Snapshot diário dos dados da planilha para dentro do repositório.
+# Mantém o mapa "open data": um fork do repo reproduz o site com dados,
+# e o site tem reserva caso a planilha fique indisponível.
+name: Snapshot diário dos dados
+
+on:
+  schedule:
+    - cron: "17 9 * * *" # todo dia ~06:17 em Brasília
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Atualiza data/snapshot.json
+        run: node scripts/snapshot.mjs
+
+      - name: Commita se houver mudança
+        run: |
+          if git diff --quiet -- data/snapshot.json; then
+            echo "Sem mudança nos dados hoje."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/snapshot.json
+          git commit -m "chore: snapshot diário dos dados"
+          git push

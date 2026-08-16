@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mapa dos Embaixadores 2026</title>
+  <meta name="description" content="O mapa colaborativo dos Embaixadores Estudantis do Google 2026: quem somos, de onde somos e o que estudamos — em todo o Brasil.">
+  <meta property="og:title" content="Mapa dos Embaixadores 2026">
+  <meta property="og:description" content="Quem somos, de onde somos e o que estudamos — o Brasil dos Embaixadores Estudantis do Google 2026, num mapa colaborativo e open source.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="theme-color" content="#0b5c37">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8D%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Aplica o tema salvo ANTES do primeiro paint (evita flash)
+    (function () {
+      try {
+        var t = localStorage.getItem('mapa-tema');
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* localStorage bloqueado: segue o tema do sistema */ }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <div class="topo-inner">
+      <a class="marca" href="#conteudo" aria-label="Mapa dos Embaixadores 2026 — início">
+        <span class="marca-pin" aria-hidden="true">📍</span>
+        <span class="marca-nome">Mapa dos Embaixadores</span>
+      </a>
+      <div class="topo-acoes">
+        <button id="botao-tema" class="botao-tema" type="button" aria-label="Alternar entre tema claro e escuro">
+          <span class="icone-tema" aria-hidden="true">◐</span>
+        </button>
+        <a id="cta-topo" class="botao botao-primario oculto" href="#" target="_blank" rel="noopener">Entrar no mapa</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- HERO: a headline é o LCP (texto, nunca imagem) -->
+    <section class="hero" aria-labelledby="titulo-hero">
+      <p class="eyebrow">Embaixadores Estudantis do Google 2026 · iniciativa independente de estudantes</p>
+      <h1 id="titulo-hero">O Brasil dos Embaixadores</h1>
+      <p class="hero-sub">
+        Somos estudantes de todo o país. Este mapa mostra <strong>quem somos, de onde somos e o
+        que estudamos</strong> — construído por nós, aberto para todos.
+      </p>
+      <div class="hero-acoes">
+        <a id="cta-hero" class="botao botao-primario oculto" href="#" target="_blank" rel="noopener">Entrar no mapa →</a>
+        <p id="aviso-form" class="aviso-form">O formulário de cadastro será divulgado nos canais do programa em breve.</p>
+        <a class="botao botao-secundario" href="#como-participar">Como funciona</a>
+      </div>
+    </section>
+
+    <!-- PAINEL DE NÚMEROS -->
+    <section class="stats" aria-label="Números do mapa">
+      <div class="stat"><span class="stat-num" id="stat-total">0</span><span class="stat-rotulo">embaixadores no mapa</span></div>
+      <div class="stat"><span class="stat-num" id="stat-ufs">0</span><span class="stat-rotulo">estados + DF</span></div>
+      <div class="stat"><span class="stat-num" id="stat-cidades">0</span><span class="stat-rotulo">cidades</span></div>
+      <div class="stat"><span class="stat-num" id="stat-areas">0</span><span class="stat-rotulo">áreas de interesse</span></div>
+    </section>
+
+    <!-- MAPA -->
+    <section class="secao-mapa" aria-labelledby="titulo-mapa">
+      <h2 id="titulo-mapa">Onde estamos</h2>
+      <p class="secao-sub">Toque ou clique num estado para conhecer os embaixadores de lá.</p>
+
+      <div id="filtros" class="filtros" role="group" aria-label="Filtrar por área de interesse"></div>
+
+      <div class="mapa-wrap">
+        <figure class="mapa-figura">
+          <div id="mapa" class="mapa" aria-label="Mapa do Brasil com a quantidade de embaixadores por estado"></div>
+          <figcaption class="legenda" aria-hidden="false">
+            <span class="legenda-titulo">Embaixadores por estado:</span>
+            <span class="legenda-itens" id="legenda-itens"></span>
+          </figcaption>
+        </figure>
+
+        <aside id="painel" class="painel" aria-live="polite">
+          <div class="painel-vazio" id="painel-vazio">
+            <p><strong>Escolha um estado no mapa</strong> para ver quem representa o programa por lá — curso, universidade e área de interesse.</p>
+          </div>
+          <div class="painel-conteudo oculto" id="painel-conteudo">
+            <div class="painel-cabecalho">
+              <div>
+                <h3 id="painel-titulo"></h3>
+                <p class="painel-capital" id="painel-capital"></p>
+              </div>
+              <button id="painel-fechar" class="painel-fechar" type="button" aria-label="Fechar detalhes do estado">✕</button>
+            </div>
+            <ul id="painel-lista" class="painel-lista"></ul>
+          </div>
+        </aside>
+      </div>
+      <div id="tooltip" class="tooltip" role="status" aria-hidden="true"></div>
+      <p id="fonte-dados" class="fonte-dados"></p>
+    </section>
+
+    <!-- LISTA COMPLETA (equivalente em texto do mapa — acessibilidade) -->
+    <section class="secao-lista" aria-labelledby="titulo-lista">
+      <h2 id="titulo-lista">Todos os embaixadores</h2>
+      <p class="secao-sub">A mesma informação do mapa, em lista — por região e estado.</p>
+      <div id="lista-completa"></div>
+    </section>
+
+    <!-- COMO PARTICIPAR -->
+    <section id="como-participar" class="secao-como" aria-labelledby="titulo-como">
+      <h2 id="titulo-como">Como entrar no mapa</h2>
+      <ol class="passos">
+        <li><strong>Preencha o formulário</strong> (leva menos de 1 minuto): nome, estado, cidade, curso, universidade e área de interesse. Só isso — nada de telefone ou e-mail.</li>
+        <li><strong>Aguarde alguns minutos.</strong> Seu registro aparece no mapa automaticamente — não precisa fazer mais nada.</li>
+        <li><strong>Compartilhe com o seu grupo.</strong> Quanto mais gente, mais completo o retrato do programa no Brasil.</li>
+      </ol>
+      <p class="aviso-privacidade"><strong>Transparência:</strong> os dados enviados ficam <strong>públicos</strong> nesta página. Por isso pedimos apenas informações não sensíveis. Para corrigir ou remover seu registro, <a id="link-remocao" href="#" rel="noopener">abra um pedido aqui</a> ou fale com quem mantém o mapa nos canais do programa.</p>
+    </section>
+
+    <!-- CONTRIBUA -->
+    <section class="secao-contribua" aria-labelledby="titulo-contribua">
+      <h2 id="titulo-contribua">Feito por nós — melhore você também</h2>
+      <p>Este mapa é <strong>código aberto</strong>: qualquer embaixador pode sugerir melhorias,
+        corrigir problemas ou criar funcionalidades novas.</p>
+      <a id="link-repo" class="botao botao-secundario" href="#" target="_blank" rel="noopener">Ver o código no GitHub →</a>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p><strong>Iniciativa independente e voluntária</strong> de estudantes participantes do Programa
+      Embaixadores Estudantis do Google 2026. <strong>Este não é um site oficial</strong> do Google
+      nem da Amplifica; nomes de programas e produtos são citados apenas para identificação.</p>
+    <p>Dados exibidos: enviados voluntariamente pelos próprios embaixadores, apenas informações não
+      sensíveis, com remoção a pedido. Mapa base derivado de
+      <a href="https://commons.wikimedia.org/wiki/File:Brazil_States_With_ID_and_State_Name_inside_svg.svg" target="_blank" rel="noopener">Wikimedia Commons (CC0)</a>.
+      Código sob licença MIT.</p>
+  </footer>
+
+  <noscript>
+    <p class="sem-js">Este mapa precisa de JavaScript para carregar os dados. A lista completa de
+      embaixadores está disponível no <a href="data/snapshot.json">arquivo de dados aberto</a>.</p>
+  </noscript>
+
+  <script src="js/config.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

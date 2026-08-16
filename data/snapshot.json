@@ -1,0 +1,14 @@
+{
+  "atualizado_em": "2026-08-16",
+  "origem": "semente inicial (o snapshot automático substitui este arquivo diariamente)",
+  "registros": [
+    {
+      "nome": "Jorge Yuri",
+      "uf": "DF",
+      "cidade": "Brasília",
+      "curso": "Física",
+      "instituicao": "UnB",
+      "area": "Inteligência Artificial"
+    }
+  ]
+}

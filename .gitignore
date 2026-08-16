@@ -1,0 +1,8 @@
+# intermediários da geração do mapa (fonte e método documentados no README)
+assets/
+
+# lixo de editor/SO
+.DS_Store
+Thumbs.db
+*.log
+node_modules/

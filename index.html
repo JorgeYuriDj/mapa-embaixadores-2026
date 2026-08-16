@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- CSP: a página renderiza dado de formulário aberto; isto transforma uma
+       regressão de XSS em violação bloqueada. connect-src cobre os endpoints
+       da planilha (docs.google.com redireciona o CSV p/ googleusercontent). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; base-uri 'none'; object-src 'none'; form-action 'none'; frame-ancestors 'none'">
   <title>Mapa dos Embaixadores 2026</title>
   <meta name="description" content="O mapa colaborativo dos Embaixadores Estudantis do Google 2026: quem somos, de onde somos e o que estudamos — em todo o Brasil.">
   <meta property="og:title" content="Mapa dos Embaixadores 2026">
@@ -12,15 +16,7 @@
   <meta name="theme-color" content="#0b5c37">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8D%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
-  <script>
-    // Aplica o tema salvo ANTES do primeiro paint (evita flash)
-    (function () {
-      try {
-        var t = localStorage.getItem('mapa-tema');
-        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-      } catch (e) { /* localStorage bloqueado: segue o tema do sistema */ }
-    })();
-  </script>
+  <script src="js/tema.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -32,7 +28,7 @@
         <span class="marca-nome">Mapa dos Embaixadores</span>
       </a>
       <div class="topo-acoes">
-        <button id="botao-tema" class="botao-tema" type="button" aria-label="Alternar entre tema claro e escuro">
+        <button id="botao-tema" class="botao-tema" type="button" aria-label="Tema escuro" aria-pressed="false">
           <span class="icone-tema" aria-hidden="true">◐</span>
         </button>
         <a id="cta-topo" class="botao botao-primario oculto" href="#" target="_blank" rel="noopener">Entrar no mapa</a>
@@ -73,6 +69,7 @@
 
       <div class="mapa-wrap">
         <figure class="mapa-figura">
+          <a class="pular-mapa" href="#titulo-lista">Pular o mapa e ir direto para a lista</a>
           <div id="mapa" class="mapa" aria-label="Mapa do Brasil com a quantidade de embaixadores por estado"></div>
           <figcaption class="legenda" aria-hidden="false">
             <span class="legenda-titulo">Embaixadores por estado:</span>
@@ -96,7 +93,7 @@
           </div>
         </aside>
       </div>
-      <div id="tooltip" class="tooltip" role="status" aria-hidden="true"></div>
+      <div id="tooltip" class="tooltip" aria-hidden="true"></div>
       <p id="fonte-dados" class="fonte-dados"></p>
     </section>
 

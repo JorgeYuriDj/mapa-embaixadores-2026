@@ -31,6 +31,8 @@ const NOMES = {
 
 const semAcento = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 const limpa = (v) => String(v ?? "").replace(/\s+/g, " ").trim().slice(0, 120);
+const MAX_BYTES = 5 * 1024 * 1024; // teto anti-inchaço: snapshot é commitado no repo
+const MAX_REGISTROS = 5000;
 
 function normalizaUF(v) {
   const chave = semAcento(String(v || "").trim().toLowerCase());
@@ -38,6 +40,8 @@ function normalizaUF(v) {
   if (NOMES[chave]) return NOMES[chave];
   const sigla = chave.slice(0, 2).toUpperCase();
   if (chave.length > 2 && UFS.has(sigla) && /[^a-z]/.test(chave[2] || "")) return sigla;
+  const par = chave.match(/\(([a-z]{2})\)\s*$/); // "Paraná (PR)"
+  if (par && UFS.has(par[1].toUpperCase())) return par[1].toUpperCase();
   return null;
 }
 
@@ -70,26 +74,39 @@ if (!resp.ok) {
   console.error("Falha ao baixar o CSV publicado: HTTP " + resp.status);
   process.exit(1);
 }
-const linhas = parseCSV(await resp.text());
+const corpo = await resp.text();
+if (corpo.length > MAX_BYTES) {
+  console.error("CSV maior que " + MAX_BYTES + " bytes — abortando por segurança (snapshot mantido).");
+  process.exit(1);
+}
+const linhas = parseCSV(corpo);
 if (linhas.length < 1) {
-  console.error("CSV vazio — snapshot não atualizado.");
+  console.error("CSV sem nenhuma linha — snapshot não atualizado.");
   process.exit(1);
 }
 
 const cab = linhas[0].map((h) => semAcento(String(h).toLowerCase()));
-const acha = (re, fallback) => {
-  const i = cab.findIndex((h) => re.test(h));
-  return i === -1 ? fallback : i;
+// 1º passo: colunas específicas; "nome" por último e só entre as que sobraram
+// (senão "Nome da sua universidade" viraria a coluna do nome)
+const usados = new Set();
+const claim = (re) => {
+  const i = cab.findIndex((h, j) => !usados.has(j) && re.test(h));
+  if (i !== -1) usados.add(i);
+  return i;
 };
-// ordem padrão do Form: [carimbo, nome, estado, cidade, curso, instituição, área]
 const idx = {
-  nome: acha(/\bnome\b/, 1),
-  uf: acha(/estado|\buf\b/, 2),
-  cidade: acha(/cidade|municipio/, 3),
-  curso: acha(/curso/, 4),
-  instituicao: acha(/faculdade|universidade|instituicao|\bies\b/, 5),
-  area: acha(/area|interesse/, 6),
+  uf: claim(/estado|\buf\b/),
+  cidade: claim(/cidade|municipio/),
+  curso: claim(/curso/),
+  instituicao: claim(/faculdade|universidade|instituicao|\bies\b/),
+  area: claim(/area|interesse/),
 };
+idx.nome = claim(/\bnome\b/);
+// cabeçalho não reconhecido → ordem padrão do Form:
+// [carimbo, nome, estado, cidade, curso, instituição, área]
+if (idx.nome === -1 || idx.uf === -1) {
+  idx.nome = 1; idx.uf = 2; idx.cidade = 3; idx.curso = 4; idx.instituicao = 5; idx.area = 6;
+}
 
 const registros = [];
 for (const l of linhas.slice(1)) {
@@ -104,8 +121,14 @@ for (const l of linhas.slice(1)) {
 }
 
 if (registros.length === 0) {
-  console.error("Nenhum registro válido no CSV — snapshot mantido como está (proteção contra sobrescrever com vazio).");
-  process.exit(1);
+  // Cenário normal do dia do lançamento (ninguém se cadastrou ainda):
+  // não é falha — sair 0 evita a Action vermelha diária; o snapshot fica como está.
+  console.log("CSV baixado, mas ainda sem registros válidos — snapshot mantido.");
+  process.exit(0);
+}
+if (registros.length > MAX_REGISTROS) {
+  console.log("Aviso: " + registros.length + " registros; cortando em " + MAX_REGISTROS + ".");
+  registros.length = MAX_REGISTROS;
 }
 
 const saida = {

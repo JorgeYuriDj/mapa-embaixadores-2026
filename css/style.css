@@ -45,12 +45,12 @@
     --brand-forte: #8bcfa4;
     --brand-cta-texto: #0c1410;
     --foco: #8bcfa4;
-    --uf-zero: #24282a;
+    --uf-zero: #2e3335;
     --uf-1: #2c6248;
     --uf-2: #3f815c;
     --uf-3: #5da87b;
     --uf-4: #8bcfa4;
-    --uf-borda: rgba(236, 234, 228, 0.35);
+    --uf-borda: rgba(236, 234, 228, 0.5);
     --uf-hover-borda: #ECEAE4;
     --sombra: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3);
   }
@@ -68,12 +68,12 @@
   --brand-forte: #8bcfa4;
   --brand-cta-texto: #0c1410;
   --foco: #8bcfa4;
-  --uf-zero: #24282a;
+  --uf-zero: #2e3335;
   --uf-1: #2c6248;
   --uf-2: #3f815c;
   --uf-3: #5da87b;
   --uf-4: #8bcfa4;
-  --uf-borda: rgba(236, 234, 228, 0.35);
+  --uf-borda: rgba(236, 234, 228, 0.5);
   --uf-hover-borda: #ECEAE4;
   --sombra: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3);
 }
@@ -82,7 +82,10 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* header sticky não pode cobrir âncora nem elemento focado (WCAG 2.4.11) */
+}
 
 body {
   background: var(--bg);
@@ -229,7 +232,16 @@ h2 {
 .mapa-figura {
   background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
   padding: 16px; box-shadow: var(--sombra);
+  position: relative;
 }
+
+/* atalho de teclado para não atravessar 27 estados no Tab */
+.pular-mapa {
+  position: absolute; left: -9999px; top: 8px; z-index: 5;
+  background: var(--brand); color: var(--brand-cta-texto);
+  padding: 10px 16px; border-radius: 8px; text-decoration: none; font-weight: 600;
+}
+.pular-mapa:focus { left: 8px; }
 .mapa svg { width: 100%; height: auto; display: block; }
 
 .uf {
@@ -241,10 +253,14 @@ h2 {
 .uf[data-nivel="2"] { fill: var(--uf-2); }
 .uf[data-nivel="3"] { fill: var(--uf-3); }
 .uf[data-nivel="4"] { fill: var(--uf-4); }
-.uf:hover, .uf:focus-visible, .uf.ativa {
+.uf:hover, .uf.ativa {
   stroke: var(--uf-hover-borda); stroke-width: 1.6;
 }
-.uf:focus-visible { outline: none; } /* o realce de foco do path é o stroke reforçado */
+/* foco de teclado tem indicador PRÓPRIO (anel), distinto de hover/seleção,
+   com contraste garantido contra qualquer degrau da rampa */
+.uf:focus-visible {
+  outline: 3px solid var(--foco); outline-offset: 2px;
+}
 
 .legenda {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px;

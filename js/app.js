@@ -11,7 +11,23 @@
 import { MAPA_VIEWBOX, UFS, UF_PATHS } from "./mapa-brasil.js";
 
 const CFG = window.MAPA_CONFIG || {};
-const MAX_CAMPO = 120; // corte duro de tamanho por campo
+const MAX_CAMPO = 120;      // corte duro de tamanho por campo
+const MAX_REGISTROS = 5000; // teto anti-flood: o form é aberto, o navegador dos visitantes não pode pagar por isso
+
+// Só aceita http(s) — impede que um PR malicioso troque o config por "javascript:..."
+function urlSegura(u) {
+  if (!u) return "";
+  try {
+    const p = new URL(u, location.href);
+    if (p.protocol === "https:" || p.protocol === "http:") return p.href;
+  } catch (e) { /* URL inválida → trata como vazia */ }
+  return "";
+}
+const URLS = {
+  form: urlSegura(CFG.FORM_URL),
+  repo: urlSegura(CFG.REPO_URL),
+  remocao: urlSegura(CFG.REMOCAO_URL),
+};
 
 // ---------- utilidades ----------
 
@@ -35,10 +51,13 @@ for (const [sigla, info] of Object.entries(UFS)) {
 function normalizaUF(v) {
   if (!v) return null;
   const chave = semAcento(String(v).trim().toLowerCase());
-  // "DF - Distrito Federal" → tenta a sigla no início
   if (NOME_PARA_UF[chave]) return NOME_PARA_UF[chave];
+  // "DF - Distrito Federal" → sigla no início
   const sigla = chave.slice(0, 2);
   if (chave.length > 2 && NOME_PARA_UF[sigla] && /[^a-z]/.test(chave[2] || "")) return NOME_PARA_UF[sigla];
+  // "Paraná (PR)" → sigla entre parênteses no fim
+  const par = chave.match(/\(([a-z]{2})\)\s*$/);
+  if (par && NOME_PARA_UF[par[1]]) return NOME_PARA_UF[par[1]];
   return null;
 }
 
@@ -50,14 +69,21 @@ function normalizaCabecalho(h) {
 
 function mapeiaColunas(cabecalhos) {
   const idx = { nome: -1, uf: -1, cidade: -1, curso: -1, instituicao: -1, area: -1 };
+  const usados = new Set();
+  // 1º passo: colunas específicas — para "Nome da sua universidade" não virar a coluna do nome
+  const regras = [
+    ["uf", /estado|\buf\b/], ["cidade", /cidade|municipio/], ["curso", /curso/],
+    ["instituicao", /faculdade|universidade|instituicao|\bies\b/], ["area", /area|interesse/],
+  ];
   cabecalhos.forEach((bruto, i) => {
     const h = normalizaCabecalho(bruto);
-    if (idx.nome === -1 && /\bnome\b/.test(h)) idx.nome = i;
-    else if (idx.uf === -1 && (/estado|\buf\b/.test(h))) idx.uf = i;
-    else if (idx.cidade === -1 && /cidade|municipio/.test(h)) idx.cidade = i;
-    else if (idx.curso === -1 && /curso/.test(h)) idx.curso = i;
-    else if (idx.instituicao === -1 && /faculdade|universidade|instituicao|\bies\b/.test(h)) idx.instituicao = i;
-    else if (idx.area === -1 && /area|interesse/.test(h)) idx.area = i;
+    for (const [campo, re] of regras) {
+      if (idx[campo] === -1 && re.test(h)) { idx[campo] = i; usados.add(i); break; }
+    }
+  });
+  // 2º passo: "nome" só entre as colunas que sobraram
+  cabecalhos.forEach((bruto, i) => {
+    if (idx.nome === -1 && !usados.has(i) && /\bnome\b/.test(normalizaCabecalho(bruto))) idx.nome = i;
   });
   return idx;
 }
@@ -221,7 +247,9 @@ function desenhaMapa() {
     p.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); abrePainel(sigla); }
     });
-    p.addEventListener("pointerenter", (ev) => mostraTooltip(sigla, ev));
+    p.addEventListener("pointerenter", (ev) => {
+      if (ev.pointerType !== "touch") mostraTooltip(sigla, ev); // no toque, tooltip só atrapalha
+    });
     p.addEventListener("pointermove", (ev) => posicionaTooltip(ev.clientX, ev.clientY));
     p.addEventListener("pointerleave", escondeTooltip);
     p.addEventListener("focus", (ev) => {
@@ -268,12 +296,13 @@ function desenhaLegenda() {
 
 // ---------- tooltip ----------
 
+// O tooltip é puramente visual (aria-hidden fixo): quem usa leitor de tela
+// já recebe a mesma informação pelo aria-label de cada estado.
 function mostraTooltip(sigla, ev, x, y) {
   const tip = $("#tooltip");
   const n = contagemPorUF(registrosVisiveis())[sigla] || 0;
   tip.textContent = UFS[sigla].nome + " · " + n + (n === 1 ? " embaixador" : " embaixadores");
   tip.classList.add("visivel");
-  tip.setAttribute("aria-hidden", "false");
   if (ev) posicionaTooltip(ev.clientX, ev.clientY);
   else if (x != null) posicionaTooltip(x, y);
 }
@@ -290,9 +319,7 @@ function posicionaTooltip(x, y) {
 }
 
 function escondeTooltip() {
-  const tip = $("#tooltip");
-  tip.classList.remove("visivel");
-  tip.setAttribute("aria-hidden", "true");
+  $("#tooltip").classList.remove("visivel");
 }
 
 // ---------- painel de detalhe ----------
@@ -320,6 +347,7 @@ function cartaoPessoa(r) {
 }
 
 function abrePainel(sigla) {
+  escondeTooltip(); // no toque, o tooltip ficaria pendurado por cima do painel
   ufAberta = sigla;
   const info = UFS[sigla];
   const doEstado = registrosVisiveis().filter((r) => r.uf === sigla);
@@ -335,9 +363,9 @@ function abrePainel(sigla) {
     li.className = "painel-ninguem";
     li.textContent = "Ainda não há embaixadores cadastrados aqui" +
       (filtroArea ? " nessa área de interesse" : "") + ". Que tal ser a primeira pessoa? ";
-    if (CFG.FORM_URL) {
+    if (URLS.form) {
       const a = document.createElement("a");
-      a.href = CFG.FORM_URL;
+      a.href = URLS.form;
       a.target = "_blank";
       a.rel = "noopener";
       a.textContent = "Cadastre-se no mapa →";
@@ -349,7 +377,9 @@ function abrePainel(sigla) {
   }
   pintaMapa();
   if (window.matchMedia("(max-width: 820px)").matches) {
-    $("#painel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    // behavior explícito ignora o CSS de reduced-motion — respeitar aqui também
+    const reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("#painel").scrollIntoView({ behavior: reduz ? "auto" : "smooth", block: "nearest" });
   }
 }
 
@@ -365,9 +395,10 @@ function fechaPainel() {
 function desenhaFiltros() {
   const cont = $("#filtros");
   cont.textContent = "";
-  const porArea = {};
-  for (const r of TODOS) if (r.area) porArea[r.area] = (porArea[r.area] || 0) + 1;
-  const areas = Object.entries(porArea).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  // Map, não objeto: chave vem do usuário ("__proto__" quebraria um objeto comum)
+  const porArea = new Map();
+  for (const r of TODOS) if (r.area) porArea.set(r.area, (porArea.get(r.area) || 0) + 1);
+  const areas = [...porArea.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
   if (areas.length < 2) return; // filtro só faz sentido com 2+ áreas
 
   const fazChip = (rotulo, valor) => {
@@ -400,7 +431,15 @@ function desenhaListaCompleta() {
   if (visiveis.length === 0) {
     const p = document.createElement("p");
     p.className = "lista-vazia";
-    p.textContent = "Nenhum embaixador cadastrado ainda — o mapa acabou de nascer. Seja quem inaugura!";
+    p.textContent = "Nenhum embaixador cadastrado ainda — o mapa acabou de nascer. Seja quem inaugura! ";
+    if (URLS.form) {
+      const a = document.createElement("a");
+      a.href = URLS.form;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = "Cadastre-se no mapa →";
+      p.appendChild(a);
+    }
     cont.appendChild(p);
     return;
   }
@@ -450,13 +489,18 @@ function desenhaStats() {
 
 // ---------- tema ----------
 
+function temaAtual() {
+  return document.documentElement.getAttribute("data-theme") ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+}
+
 function ligaTema() {
-  $("#botao-tema").addEventListener("click", () => {
-    const raiz = document.documentElement;
-    const atual = raiz.getAttribute("data-theme") ||
-      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    const novo = atual === "dark" ? "light" : "dark";
-    raiz.setAttribute("data-theme", novo);
+  const botao = $("#botao-tema");
+  botao.setAttribute("aria-pressed", String(temaAtual() === "dark"));
+  botao.addEventListener("click", () => {
+    const novo = temaAtual() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", novo);
+    botao.setAttribute("aria-pressed", String(novo === "dark"));
     try { localStorage.setItem("mapa-tema", novo); } catch (e) { /* sem persistência */ }
   });
 }
@@ -464,16 +508,16 @@ function ligaTema() {
 // ---------- links de configuração ----------
 
 function ligaLinks() {
-  if (CFG.FORM_URL) {
+  if (URLS.form) {
     for (const id of ["#cta-topo", "#cta-hero"]) {
       const a = $(id);
-      a.href = CFG.FORM_URL;
+      a.href = URLS.form;
       a.classList.remove("oculto");
     }
     $("#aviso-form").classList.add("oculto");
   }
-  if (CFG.REPO_URL) $("#link-repo").href = CFG.REPO_URL;
-  if (CFG.REMOCAO_URL) $("#link-remocao").href = CFG.REMOCAO_URL;
+  if (URLS.repo) $("#link-repo").href = URLS.repo;
+  if (URLS.remocao) $("#link-remocao").href = URLS.remocao;
 }
 
 // ---------- inicialização ----------
@@ -490,7 +534,7 @@ async function inicia() {
 
   try {
     const { registros, fonte } = await carregaDados();
-    TODOS = registros;
+    TODOS = registros.slice(0, MAX_REGISTROS);
     $("#fonte-dados").textContent = "Fonte dos dados: " + fonte + ". Novos cadastros aparecem em alguns minutos.";
   } catch (e) {
     console.error("Nenhuma fonte de dados disponível:", e);

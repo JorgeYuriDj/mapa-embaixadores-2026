@@ -26,8 +26,8 @@ Google Form  ──▶  Planilha Google  ──▶  Página estática (GitHub Pa
   se ambos falharem, usa o `data/snapshot.json` commitado no repositório.
 - **Open data:** uma Action diária copia os dados para dentro do repo — um fork deste
   repositório reproduz o site completo, com dados.
-- **Zero backend próprio, zero custo, zero build:** HTML + CSS + JS puros. Abra o
-  `index.html` no navegador e está rodando.
+- **Zero backend próprio, zero custo, zero build:** HTML + CSS + JS puros — basta um
+  servidor estático (`npx serve .`) e está rodando.
 
 ## Rodando localmente
 
@@ -39,8 +39,8 @@ npx serve .
 # ou: python -m http.server 8000
 ```
 
-(Servir por HTTP é necessário porque a página usa módulos ES e `fetch` — abrir o arquivo
-direto com dois cliques funciona no Firefox, mas não em todos os navegadores.)
+(Servir por HTTP é necessário porque a página usa módulos ES e `fetch` — abrir o
+`index.html` com dois cliques NÃO funciona nos navegadores atuais.)
 
 ## Privacidade e remoção de dados
 
@@ -63,6 +63,8 @@ Ideias já mapeadas (pegue uma!):
 - [ ] Busca por nome/universidade
 - [ ] Compartilhar o recorte de um estado (link direto `#uf=SP`)
 - [ ] Modo "apresentação" para eventos do programa
+- [ ] Área de toque ampliada para estados pequenos no celular (DF, SE, AL, RJ, ES) —
+  hoje a lista completa é o caminho equivalente com alvos grandes
 
 ## Créditos e licenças
 

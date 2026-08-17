@@ -1,13 +1,286 @@
 {
-  "atualizado_em": "2026-08-16",
-  "origem": "semente inicial (o snapshot automático substitui este arquivo diariamente)",
+  "atualizado_em": "2026-08-17",
+  "origem": "snapshot automático do CSV publicado da planilha",
   "registros": [
+    {
+      "uf": "RS",
+      "cidade": "Porto Alegre",
+      "curso": "Ciência da Computação",
+      "instituicao": "Uniritter",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Ituiutaba",
+      "curso": "Engenharia Elétrica",
+      "instituicao": "UEMG",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "CE",
+      "cidade": "Fortaleza",
+      "curso": "Engenharia de Computação",
+      "instituicao": "IFCE",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "PI",
+      "cidade": "Parnaíba",
+      "curso": "Matemática",
+      "instituicao": "UFDPar",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Paulista",
+      "curso": "Licenciatura em Letras Portuuguês e Inglês",
+      "instituicao": "UniFAFIRE",
+      "area": "Marketing & Conteúdo"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Juiz de Fora",
+      "curso": "Mestrado em Ambiente Construído",
+      "instituicao": "UFJF",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Caruaru",
+      "curso": "ADS",
+      "instituicao": "Unifavip",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Bernardo do Campo",
+      "curso": "Análise e Desenvolvimento de Sistemas",
+      "instituicao": "SPTECH",
+      "area": "Desenvolvimento de Software"
+    },
     {
       "uf": "DF",
       "cidade": "Brasília",
       "curso": "Física",
-      "instituicao": "UnB",
+      "instituicao": "Unb",
       "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "SC",
+      "cidade": "Florianópolis",
+      "curso": "Administração",
+      "instituicao": "UFSC",
+      "area": "Empreendedorismo"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Campinas",
+      "curso": "Matemática Aplicada",
+      "instituicao": "UNICAMP",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "PI",
+      "cidade": "Teresina",
+      "curso": "Inteligência Artificial",
+      "instituicao": "Instituto de tecnologia do Piauí (PIT)",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Montes Claros",
+      "curso": "Administração",
+      "instituicao": "UNIMONTES",
+      "area": "Empreendedorismo"
+    },
+    {
+      "uf": "CE",
+      "cidade": "Fortaleza",
+      "curso": "Jornalismo",
+      "instituicao": "Universidade Federal do Ceará",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Pirassununga",
+      "curso": "Engenharia de alimentos",
+      "instituicao": "Universidade de São Paulo (USP/FZEA)",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Análise e desenvolvimento de software",
+      "instituicao": "Uninter",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "AM",
+      "cidade": "Manaus",
+      "curso": "Engenharia de Produção",
+      "instituicao": "UFAM",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Direito",
+      "instituicao": "Mackenzie",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Publicidade",
+      "instituicao": "ESPM",
+      "area": "Marketing & Conteúdo"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Rio de Janeiro",
+      "curso": "Biomedicina",
+      "instituicao": "Estácio",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Macaé",
+      "curso": "Engenharia Elétrica",
+      "instituicao": "IFF - Campus Macaé",
+      "area": "Outra"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Ciência da computação",
+      "instituicao": "Universidade Nove de Julho",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SC",
+      "cidade": "Florianópolis",
+      "curso": "Direito",
+      "instituicao": "Uniasselvi",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Uberlândia",
+      "curso": "Administração",
+      "instituicao": "ESAMC",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "CE",
+      "cidade": "Fortaleza",
+      "curso": "RH",
+      "instituicao": "Facuminas",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "PR",
+      "cidade": "Telêmaco Borba",
+      "curso": "Engenharia de Software",
+      "instituicao": "Unicesumar",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "PA",
+      "cidade": "Belém",
+      "curso": "Sistemas de informação",
+      "instituicao": "UFRA",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São José dos Campos",
+      "curso": "Bacharelado Interdisciplinar em Ciência e Tecnologia",
+      "instituicao": "Universidade Federal de São Paulo",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Mogi das Cruzes",
+      "curso": "Engenharia de Software",
+      "instituicao": "Universidade de Mogi das Cruzes",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "ES",
+      "cidade": "Vitória",
+      "curso": "Engenharia de Produção",
+      "instituicao": "UFES",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Jundiaí",
+      "curso": "Análise e desenvolvimento de sistemas",
+      "instituicao": "UNIANCHIETA",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Governador Valadares",
+      "curso": "Publicidade e Propaganda",
+      "instituicao": "UNIVALE",
+      "area": "Marketing & Conteúdo"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Taboão da Serra",
+      "curso": "Ciência da Computação",
+      "instituicao": "FAM - Centro Universitário das Américas",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Inteligência artificial",
+      "instituicao": "PUC-SP",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "PR",
+      "cidade": "Medianeira",
+      "curso": "Ciência da Computação",
+      "instituicao": "UTFPR",
+      "area": "Robótica"
+    },
+    {
+      "uf": "BA",
+      "cidade": "Juazeiro",
+      "curso": "Direito",
+      "instituicao": "UNEB",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São paulo",
+      "curso": "Análise e desenvolvimento de sistemas",
+      "instituicao": "FIAP",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "PI",
+      "cidade": "Teresina",
+      "curso": "Engenharia de Software",
+      "instituicao": "Unicesumar",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "PB",
+      "cidade": "João Pessoa",
+      "curso": "Direito",
+      "instituicao": "UFPB",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Sete Lagoas",
+      "curso": "Ciência da Computação",
+      "instituicao": "UNA",
+      "area": "Dados & Machine Learning"
     }
   ]
 }

@@ -86,8 +86,8 @@ if (linhas.length < 1) {
 }
 
 const cab = linhas[0].map((h) => semAcento(String(h).toLowerCase()));
-// 1º passo: colunas específicas; "nome" por último e só entre as que sobraram
-// (senão "Nome da sua universidade" viraria a coluna do nome)
+// Cadastro anônimo: nenhuma coluna de nome é lida — se a planilha tiver uma
+// (resquício antigo), ela não entra no snapshot público.
 const usados = new Set();
 const claim = (re) => {
   const i = cab.findIndex((h, j) => !usados.has(j) && re.test(h));
@@ -101,20 +101,18 @@ const idx = {
   instituicao: claim(/faculdade|universidade|instituicao|\bies\b/),
   area: claim(/area|interesse/),
 };
-idx.nome = claim(/\bnome\b/);
 // cabeçalho não reconhecido → ordem padrão do Form:
-// [carimbo, nome, estado, cidade, curso, instituição, área]
-if (idx.nome === -1 || idx.uf === -1) {
-  idx.nome = 1; idx.uf = 2; idx.cidade = 3; idx.curso = 4; idx.instituicao = 5; idx.area = 6;
+// [carimbo, estado, cidade, curso, instituição, área]
+if (idx.uf === -1) {
+  idx.uf = 1; idx.cidade = 2; idx.curso = 3; idx.instituicao = 4; idx.area = 5;
 }
 
 const registros = [];
 for (const l of linhas.slice(1)) {
   const uf = normalizaUF(l[idx.uf]);
-  const nome = limpa(l[idx.nome]);
-  if (!uf || !nome) continue;
+  if (!uf) continue;
   registros.push({
-    nome, uf,
+    uf,
     cidade: limpa(l[idx.cidade]), curso: limpa(l[idx.curso]),
     instituicao: limpa(l[idx.instituicao]), area: limpa(l[idx.area]),
   });

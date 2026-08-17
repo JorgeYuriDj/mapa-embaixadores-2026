@@ -1,5 +1,11 @@
 # intermediários da geração do mapa (fonte e método documentados no README)
-assets/
+# padrão com "*" (e não "assets/") porque o git não desce em diretório ignorado —
+# sem isso as exceções abaixo não funcionariam
+assets/*
+
+# ...exceto a capa do link (og:image), que É publicada junto com o site
+!assets/og-image.png
+!assets/og-image.html
 
 # lixo de editor/SO
 .DS_Store

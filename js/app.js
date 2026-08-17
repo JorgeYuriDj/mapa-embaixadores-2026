@@ -68,9 +68,9 @@ function normalizaCabecalho(h) {
 }
 
 function mapeiaColunas(cabecalhos) {
-  const idx = { nome: -1, uf: -1, cidade: -1, curso: -1, instituicao: -1, area: -1 };
-  const usados = new Set();
-  // 1º passo: colunas específicas — para "Nome da sua universidade" não virar a coluna do nome
+  // Cadastro anônimo: não existe coluna de nome — se a planilha tiver uma
+  // (resquício antigo), ela é ignorada e nunca chega ao DOM.
+  const idx = { uf: -1, cidade: -1, curso: -1, instituicao: -1, area: -1 };
   const regras = [
     ["uf", /estado|\buf\b/], ["cidade", /cidade|municipio/], ["curso", /curso/],
     ["instituicao", /faculdade|universidade|instituicao|\bies\b/], ["area", /area|interesse/],
@@ -78,12 +78,8 @@ function mapeiaColunas(cabecalhos) {
   cabecalhos.forEach((bruto, i) => {
     const h = normalizaCabecalho(bruto);
     for (const [campo, re] of regras) {
-      if (idx[campo] === -1 && re.test(h)) { idx[campo] = i; usados.add(i); break; }
+      if (idx[campo] === -1 && re.test(h)) { idx[campo] = i; break; }
     }
-  });
-  // 2º passo: "nome" só entre as colunas que sobraram
-  cabecalhos.forEach((bruto, i) => {
-    if (idx.nome === -1 && !usados.has(i) && /\bnome\b/.test(normalizaCabecalho(bruto))) idx.nome = i;
   });
   return idx;
 }
@@ -91,19 +87,17 @@ function mapeiaColunas(cabecalhos) {
 function linhasParaRegistros(cabecalhos, linhas) {
   const idx = mapeiaColunas(cabecalhos);
   // se os cabeçalhos não casaram, tenta a ordem padrão do Form:
-  // [carimbo, nome, estado, cidade, curso, instituição, área]
-  if (idx.nome === -1 || idx.uf === -1) {
-    const desloc = cabecalhos.length >= 7 ? 1 : 0;
-    idx.nome = desloc; idx.uf = desloc + 1; idx.cidade = desloc + 2;
-    idx.curso = desloc + 3; idx.instituicao = desloc + 4; idx.area = desloc + 5;
+  // [carimbo, estado, cidade, curso, instituição, área]
+  if (idx.uf === -1) {
+    const desloc = cabecalhos.length >= 6 ? 1 : 0;
+    idx.uf = desloc; idx.cidade = desloc + 1; idx.curso = desloc + 2;
+    idx.instituicao = desloc + 3; idx.area = desloc + 4;
   }
   const registros = [];
   for (const l of linhas) {
     const uf = normalizaUF(l[idx.uf]);
-    const nome = limpaCampo(l[idx.nome]);
-    if (!uf || !nome) continue; // sem estado válido ou sem nome, não entra
+    if (!uf) continue; // sem estado válido, não entra no mapa
     registros.push({
-      nome,
       uf,
       cidade: limpaCampo(l[idx.cidade]),
       curso: limpaCampo(l[idx.curso]),
@@ -174,10 +168,9 @@ async function carregaSnapshot() {
   const registros = [];
   for (const r of j.registros || []) {
     const uf = normalizaUF(r.uf);
-    const nome = limpaCampo(r.nome);
-    if (!uf || !nome) continue;
+    if (!uf) continue;
     registros.push({
-      nome, uf,
+      uf,
       cidade: limpaCampo(r.cidade), curso: limpaCampo(r.curso),
       instituicao: limpaCampo(r.instituicao), area: limpaCampo(r.area),
     });
@@ -325,16 +318,18 @@ function escondeTooltip() {
 // ---------- painel de detalhe ----------
 
 function cartaoPessoa(r) {
+  // Cadastro anônimo: sem nome. Linha forte = curso · universidade;
+  // linha secundária = cidade; chip = área de interesse.
   const li = document.createElement("li");
-  const nome = document.createElement("p");
-  nome.className = "pessoa-nome";
-  nome.textContent = r.nome;
-  li.appendChild(nome);
-  const detalhes = [r.curso, r.instituicao, r.cidade].filter(Boolean).join(" · ");
-  if (detalhes) {
+  const forte = [r.curso, r.instituicao].filter(Boolean).join(" · ");
+  const titulo = document.createElement("p");
+  titulo.className = "pessoa-nome";
+  titulo.textContent = forte || r.cidade || "Embaixador(a) do programa";
+  li.appendChild(titulo);
+  if (forte && r.cidade) {
     const det = document.createElement("p");
     det.className = "pessoa-detalhe";
-    det.textContent = detalhes;
+    det.textContent = r.cidade;
     li.appendChild(det);
   }
   if (r.area) {
@@ -346,7 +341,7 @@ function cartaoPessoa(r) {
   return li;
 }
 
-function abrePainel(sigla) {
+function abrePainel(sigla, { rolar = true } = {}) {
   escondeTooltip(); // no toque, o tooltip ficaria pendurado por cima do painel
   ufAberta = sigla;
   const info = UFS[sigla];
@@ -376,7 +371,7 @@ function abrePainel(sigla) {
     for (const r of doEstado) lista.appendChild(cartaoPessoa(r));
   }
   pintaMapa();
-  if (window.matchMedia("(max-width: 820px)").matches) {
+  if (rolar && window.matchMedia("(max-width: 820px)").matches) {
     // behavior explícito ignora o CSS de reduced-motion — respeitar aqui também
     const reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     $("#painel").scrollIntoView({ behavior: reduz ? "auto" : "smooth", block: "nearest" });
@@ -544,6 +539,20 @@ async function inicia() {
   desenhaFiltros();
   pintaMapa();
   desenhaListaCompleta();
+  abreEstadoMaisCheio();
+}
+
+// Estados pequenos (DF, SE, AL, RJ, ES) são alvos de toque minúsculos no celular —
+// pendência conhecida (README). Enquanto isso, já abrir o estado com mais gente
+// garante que o visitante veja conteúdo real sem precisar acertar o alvo.
+// Sem rolagem: mexer no scroll durante o carregamento desorienta.
+function abreEstadoMaisCheio() {
+  const contagem = contagemPorUF(TODOS);
+  let melhor = null, maior = 0;
+  for (const [sigla, n] of Object.entries(contagem)) {
+    if (n > maior) { maior = n; melhor = sigla; }
+  }
+  if (melhor) abrePainel(melhor, { rolar: false });
 }
 
 inicia();

@@ -8,11 +8,19 @@
        da planilha (docs.google.com redireciona o CSV p/ googleusercontent). -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; base-uri 'none'; object-src 'none'; form-action 'none'; frame-ancestors 'none'">
   <title>Mapa dos Embaixadores 2026</title>
-  <meta name="description" content="O mapa colaborativo dos Embaixadores Estudantis do Google 2026: quem somos, de onde somos e o que estudamos — em todo o Brasil.">
+  <meta name="description" content="De onde somos e o que estudamos, em cadastro anônimo — o mapa colaborativo dos Embaixadores Estudantis do Google 2026. Iniciativa independente de estudantes.">
   <meta property="og:title" content="Mapa dos Embaixadores 2026">
-  <meta property="og:description" content="Quem somos, de onde somos e o que estudamos — o Brasil dos Embaixadores Estudantis do Google 2026, num mapa colaborativo e open source.">
+  <meta property="og:description" content="De onde somos e o que estudamos, em cadastro anônimo — o Brasil dos Embaixadores Estudantis do Google 2026, num mapa colaborativo e open source. Iniciativa independente de estudantes, não oficial.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://jorgeyuridj.github.io/mapa-embaixadores-2026/">
+  <!-- Capa do link (WhatsApp/Telegram/LinkedIn). URL absoluta: as redes não
+       resolvem caminho relativo. Regerar com: node scripts/gera-og-image.mjs -->
+  <meta property="og:image" content="https://jorgeyuridj.github.io/mapa-embaixadores-2026/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="O Brasil dos Embaixadores — mapa do Brasil com estados em tons de verde.">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b5c37">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8D%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
@@ -42,8 +50,8 @@
       <p class="eyebrow">Embaixadores Estudantis do Google 2026 · iniciativa independente de estudantes</p>
       <h1 id="titulo-hero">O Brasil dos Embaixadores</h1>
       <p class="hero-sub">
-        Somos estudantes de todo o país. Este mapa mostra <strong>quem somos, de onde somos e o
-        que estudamos</strong> — construído por nós, aberto para todos.
+        Somos estudantes de todo o país. Este mapa mostra <strong>de onde somos e o que
+        estudamos</strong> — cadastro anônimo, construído por nós, aberto para todos.
       </p>
       <div class="hero-acoes">
         <a id="cta-hero" class="botao botao-primario oculto" href="#" target="_blank" rel="noopener">Entrar no mapa →</a>
@@ -79,7 +87,7 @@
 
         <aside id="painel" class="painel" aria-live="polite">
           <div class="painel-vazio" id="painel-vazio">
-            <p><strong>Escolha um estado no mapa</strong> para ver quem representa o programa por lá — curso, universidade e área de interesse.</p>
+            <p><strong>Escolha um estado no mapa</strong> para ver os embaixadores de lá — curso, universidade, cidade e área de interesse.</p>
           </div>
           <div class="painel-conteudo oculto" id="painel-conteudo">
             <div class="painel-cabecalho">
@@ -108,11 +116,11 @@
     <section id="como-participar" class="secao-como" aria-labelledby="titulo-como">
       <h2 id="titulo-como">Como entrar no mapa</h2>
       <ol class="passos">
-        <li><strong>Preencha o formulário</strong> (leva menos de 1 minuto): nome, estado, cidade, curso, universidade e área de interesse. Só isso — nada de telefone ou e-mail.</li>
+        <li><strong>Preencha o formulário</strong> (leva menos de 1 minuto): estado, cidade, curso, universidade e área de interesse. <strong>O cadastro é anônimo</strong> — não pedimos nome, telefone nem e-mail.</li>
         <li><strong>Aguarde alguns minutos.</strong> Seu registro aparece no mapa automaticamente — não precisa fazer mais nada.</li>
         <li><strong>Compartilhe com o seu grupo.</strong> Quanto mais gente, mais completo o retrato do programa no Brasil.</li>
       </ol>
-      <p class="aviso-privacidade"><strong>Transparência:</strong> os dados enviados ficam <strong>públicos</strong> nesta página. Por isso pedimos apenas informações não sensíveis. Para corrigir ou remover seu registro, <a id="link-remocao" href="#" rel="noopener">abra um pedido aqui</a> ou fale com quem mantém o mapa nos canais do programa.</p>
+      <p class="aviso-privacidade"><strong>Transparência:</strong> os dados enviados ficam <strong>públicos</strong> nesta página. Por isso o cadastro é <strong>anônimo</strong> e pedimos apenas informações não sensíveis — nada de nome, telefone, e-mail ou documento. Para corrigir ou remover seu registro, <a id="link-remocao" href="#" rel="noopener">abra um pedido aqui</a> ou fale com quem mantém o mapa nos canais do programa — o registro sai do site e do arquivo de dados atual. Como o projeto é aberto, cópias antigas do arquivo permanecem no histórico público do código e em eventuais forks; por isso pedimos só o mínimo, sem nada que identifique você.</p>
     </section>
 
     <!-- CONTRIBUA -->

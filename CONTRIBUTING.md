@@ -5,9 +5,10 @@ documentação. O fluxo é o padrão do GitHub: **fork → branch → Pull Reque
 
 ## As 5 regras do projeto (não negociáveis)
 
-1. **Privacidade acima de tudo.** Nada de coletar ou exibir dado sensível (telefone,
-   e-mail, documento, endereço). O mapa só mostra: nome, estado, cidade, curso,
-   universidade e área de interesse — enviados pela própria pessoa.
+1. **Privacidade acima de tudo — o cadastro é ANÔNIMO.** O mapa só mostra: estado,
+   cidade, curso, universidade e área de interesse, enviados pela própria pessoa.
+   **Nome não é coletado nem exibido**, e nada de dado sensível (telefone, e-mail,
+   documento, endereço). PR que reintroduza identificação pessoal não passa.
 2. **Todo texto vindo de dados entra no DOM via `textContent`** (nunca `innerHTML`,
    nunca template string injetada). É a defesa contra XSS de um site que renderiza dado
    enviado por formulário aberto. PR que viole isso não passa.
@@ -18,6 +19,15 @@ documentação. O fluxo é o padrão do GitHub: **fork → branch → Pull Reque
 5. **Acessibilidade não regride.** Foco visível, navegação por teclado no mapa, alvos de
    toque ≥ 44px, contraste AA, `prefers-reduced-motion` respeitado, e a lista completa
    (equivalente em texto do mapa) sempre presente.
+
+## Antes de abrir o PR
+
+```bash
+node tests/parser.test.mjs   # sem instalar nada; 30 testes, inclui as travas de privacidade
+```
+
+Mexeu no visual da capa do link? Regere a imagem: `node scripts/gera-og-image.mjs`
+(precisa de Chrome ou Edge instalado — só para gerar; o site continua sem dependências).
 
 ## Dicas técnicas
 

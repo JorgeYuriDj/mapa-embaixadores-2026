@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-08-17",
+  "atualizado_em": "2026-08-18",
   "origem": "snapshot automático do CSV publicado da planilha",
   "registros": [
     {
@@ -281,6 +281,272 @@
       "curso": "Ciência da Computação",
       "instituicao": "UNA",
       "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Santa Bárbara d’Oeste",
+      "curso": "Engenharia de Software",
+      "instituicao": "Anhanguera",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Taquaritinga do Norte",
+      "curso": "Direito",
+      "instituicao": "Universidade Estadual da Paraíba",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Petrolina",
+      "curso": "Psicologia",
+      "instituicao": "UniFTC",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Belford roxo",
+      "curso": "Engenharia mecânica",
+      "instituicao": "CEFET-RJ",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "RS",
+      "cidade": "Caxias do sul",
+      "curso": "Engenharia de software",
+      "instituicao": "Universidade de Caxias do Sul",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Lagoa do Ouro",
+      "curso": "Engenharia de Software",
+      "instituicao": "UPE",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Niterói",
+      "curso": "Engenharia de Produção",
+      "instituicao": "UFF",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "AM",
+      "cidade": "Manaus",
+      "curso": "Psicologia",
+      "instituicao": "Fametro",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "RN",
+      "cidade": "Natal",
+      "curso": "Eng Mecatrônica",
+      "instituicao": "Universidade Federal do Rio Grande do Norte",
+      "area": "Robótica"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Campinas",
+      "curso": "Engenharia Mecânica",
+      "instituicao": "UNICAMP",
+      "area": "Empreendedorismo"
+    },
+    {
+      "uf": "BA",
+      "cidade": "Condeúba",
+      "curso": "Publicidade e Propaganda",
+      "instituicao": "Uninter",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "RN",
+      "cidade": "Pau dos Ferros",
+      "curso": "Engenharia da Computação",
+      "instituicao": "Universidade Federal Rural do Semi Árido - UFERSA",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "DF",
+      "cidade": "Brasília",
+      "curso": "Engenharia de Software",
+      "instituicao": "Universidade de Brasilia UnB",
+      "area": ""
+    },
+    {
+      "uf": "GO",
+      "cidade": "Goiânia",
+      "curso": "Engenharia de Computação",
+      "instituicao": "UFG",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Rio de Janeiro",
+      "curso": "Engenharia Química",
+      "instituicao": "UFRJ",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Rio de Janeiro",
+      "curso": "Ciencias Sociais",
+      "instituicao": "UFRJ",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Guarulhos",
+      "curso": "Direito",
+      "instituicao": "PUC-SP",
+      "area": "Outra"
+    },
+    {
+      "uf": "CE",
+      "cidade": "Fortaleza",
+      "curso": "Ciências da computação",
+      "instituicao": "UNIFOR",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "MT",
+      "cidade": "Cuiabá",
+      "curso": "Análise e desenvolvimento de sistemas",
+      "instituicao": "UNIC",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Caraguatatuba",
+      "curso": "Análise e Desenvolvimento de Sistemas",
+      "instituicao": "IFSP",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Caetano do Sul",
+      "curso": "Análise e Desenvolvimento de Sistemas",
+      "instituicao": "Instituto Mauá de Tecnologia",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Engenharia da Computação",
+      "instituicao": "Senac",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "PI",
+      "cidade": "Parnaíba",
+      "curso": "Biotecnologia",
+      "instituicao": "UFDPar",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Belo Horizonte",
+      "curso": "Ciência da Computação",
+      "instituicao": "PUC Minas",
+      "area": "Outra"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "MBA em Ciência de Dados, analise de dados e inteligência artificial",
+      "instituicao": "USP Esalq",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Jaboatão dos Guararapes",
+      "curso": "Sistemas de Informação",
+      "instituicao": "UNINASSAU",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Bragança Paulista",
+      "curso": "Administração",
+      "instituicao": "Universidade São Francisco",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Lavras",
+      "curso": "Engenharia Química",
+      "instituicao": "Universidade Federal de Lavras",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Rio de Janeiro",
+      "curso": "Publicidade e Propaganda",
+      "instituicao": "Ibmec",
+      "area": "Marketing & Conteúdo"
+    },
+    {
+      "uf": "AM",
+      "cidade": "Manaus",
+      "curso": "Direito",
+      "instituicao": "Universidade Estácio do Amazonas",
+      "area": "Empreendedorismo"
+    },
+    {
+      "uf": "DF",
+      "cidade": "Brasilia",
+      "curso": "Ciência da Computação",
+      "instituicao": "Universidade Católica de Brasília",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Sao Paulo",
+      "curso": "Banco de Dados",
+      "instituicao": "Mackenzie",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "PR",
+      "cidade": "Curitiba",
+      "curso": "Engenharia de Software",
+      "instituicao": "PUCPR",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Belo Horizonte",
+      "curso": "Análise e Desenvolvimento de Sistemas",
+      "instituicao": "Estácio",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "AM",
+      "cidade": "Manaus",
+      "curso": "Física",
+      "instituicao": "Centro Universitário Internacional - UNINTER",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "MA",
+      "cidade": "São Luís",
+      "curso": "Ciência e Tecnologia",
+      "instituicao": "Universidade Federal do Maranhão",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Vinhedo",
+      "curso": "Engenharia da computação",
+      "instituicao": "UNIVESP",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "MG",
+      "cidade": "Belo Horizonte",
+      "curso": "Medicina",
+      "instituicao": "Faculdade de Ciências Médicas de Minas Gerais",
+      "area": "Desenvolvimento de Software"
     }
   ]
 }

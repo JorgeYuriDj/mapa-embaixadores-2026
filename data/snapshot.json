@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-08-18",
+  "atualizado_em": "2026-08-19",
   "origem": "snapshot automático do CSV publicado da planilha",
   "registros": [
     {
@@ -547,6 +547,132 @@
       "curso": "Medicina",
       "instituicao": "Faculdade de Ciências Médicas de Minas Gerais",
       "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "CE",
+      "cidade": "Fortaleza",
+      "curso": "Ciências da computação",
+      "instituicao": "UNIFOR",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "MA",
+      "cidade": "São Luís",
+      "curso": "Ciência da Computação",
+      "instituicao": "Universidade Federal do Maranhão - UFMA",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "PI",
+      "cidade": "Teresina",
+      "curso": "Terapia Ocupacional",
+      "instituicao": "Uninassau",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "SP",
+      "cidade": "engenheiro coelho",
+      "curso": "publicidade e propaganda",
+      "instituicao": "UNASP - EC",
+      "area": "Marketing & Conteúdo"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Ipojuca",
+      "curso": "Mestrado em Tecnologia e Gestao da EAD",
+      "instituicao": "UFRPE",
+      "area": "IA na Educação"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Engenharia Química",
+      "instituicao": "USP",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "PB",
+      "cidade": "João Pessoa",
+      "curso": "Ciência da Computação",
+      "instituicao": "Unipê/Cruzeiro do Sul",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "BA",
+      "cidade": "Paulo Afonso",
+      "curso": "Engenharia Elétrica",
+      "instituicao": "IFBA",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Direito",
+      "instituicao": "Mackenzie",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "DF",
+      "cidade": "Brasilia DF",
+      "curso": "Engenharia de Software",
+      "instituicao": "UniCEUB",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Ciência da Computação",
+      "instituicao": "Cruzeiro do Sul",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SE",
+      "cidade": "Lagarto",
+      "curso": "Sistemas de Informação",
+      "instituicao": "Instituto Federal de Sergipe",
+      "area": "Desenvolvimento de Software"
+    },
+    {
+      "uf": "SP",
+      "cidade": "São Paulo",
+      "curso": "Engenharia da computação",
+      "instituicao": "Insper",
+      "area": "Empreendedorismo"
+    },
+    {
+      "uf": "RS",
+      "cidade": "Porto Alegre",
+      "curso": "Engenharia de Software",
+      "instituicao": "PUCRS",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Carpina",
+      "curso": "Engenharia da computação",
+      "instituicao": "UFPE",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "RJ",
+      "cidade": "Maricá",
+      "curso": "Análise e desenvolvimento de sistemas",
+      "instituicao": "UNIFESO",
+      "area": "Dados & Machine Learning"
+    },
+    {
+      "uf": "SP",
+      "cidade": "guarulhos",
+      "curso": "Gestão de Políticas Públicas",
+      "instituicao": "Universidade de São Paulo",
+      "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "DF",
+      "cidade": "Ceilândia-DF",
+      "curso": "Ciências Econômicas",
+      "instituicao": "Universidade Católica de Brasília",
+      "area": "Pesquisa Científica"
     }
   ]
 }

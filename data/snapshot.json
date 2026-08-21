@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-08-20",
+  "atualizado_em": "2026-08-21",
   "origem": "snapshot automático do CSV publicado da planilha",
   "registros": [
     {
@@ -673,6 +673,20 @@
       "curso": "Ciências Econômicas",
       "instituicao": "Universidade Católica de Brasília",
       "area": "Pesquisa Científica"
+    },
+    {
+      "uf": "SP",
+      "cidade": "Presidente Prudente",
+      "curso": "Mestrado em Ciência da Computação",
+      "instituicao": "UNESP IBILCE",
+      "area": "Inteligência Artificial"
+    },
+    {
+      "uf": "PR",
+      "cidade": "Curitiba",
+      "curso": "Direito",
+      "instituicao": "Universidade Positivo",
+      "area": "IA na Educação"
     }
   ]
 }

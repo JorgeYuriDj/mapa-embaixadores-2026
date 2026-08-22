@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-08-21",
+  "atualizado_em": "2026-08-22",
   "origem": "snapshot automático do CSV publicado da planilha",
   "registros": [
     {
@@ -687,6 +687,13 @@
       "curso": "Direito",
       "instituicao": "Universidade Positivo",
       "area": "IA na Educação"
+    },
+    {
+      "uf": "PE",
+      "cidade": "Recife",
+      "curso": "Sistemas para Internet",
+      "instituicao": "Universidade Católica de Pernambuco",
+      "area": "Desenvolvimento de Software"
     }
   ]
 }
